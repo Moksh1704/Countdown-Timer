@@ -1,0 +1,208 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Countdown Timer</title>
+<style>
+    body {
+        background-image: url(clock.jpg);
+        background-repeat: no-repeat;
+        
+    background-size: cover;
+    background-position: center;
+   
+        width: 100%;
+        height: 100vh;
+        display: grid;
+        grid-template-columns: 70%;
+        justify-content: center;
+        align-content: center;
+        background-color: #ffffff;
+    }
+    .timer {
+       
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        margin-top: 30px;
+    }
+    .sub_timer {
+        width: 220px;
+       background-color: rgb(172, 179, 186);
+        backdrop-filter: blur(20px);
+        border-radius: 20px;
+        overflow: hidden;
+    }
+    .digit {
+        color: #170303;
+        font-weight: lighter;
+        font-size: 50px;
+        text-align: center;
+        padding: 2.5rem 0;
+    }
+    .digit_name {
+        color: #000;
+        font-family:cursive;
+        text-align: center;
+        padding: 0.6rem 0;
+        font-size: 25px;
+        background-color: rgb(116, 121, 126);;
+        border-bottom:2px solid #000;
+        border-top:2px solid #000;
+    }
+    .btn {
+        border-radius: 5px;
+        padding: 10px 20px;
+        background-color: #ffffff;
+    }
+    #stopBtn {
+        width: 200px;
+        font-size: larger;
+    }
+    #resetBtn {
+        width: 200px;
+        font-size: larger;
+
+    }
+    .button-cnt {
+        display: inline-block;
+        margin-top: 20px;
+    }
+    #startBtn {
+        width: 100px;
+        font-size: larger;
+    }
+    input[type=number] {
+        width: 500px;
+        padding: 10px;
+        margin: 10px 0;
+    }
+    h2{
+        text-align: center;
+        font-size:3em;
+        font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        font-weight: lighter;
+        color: #ffffff;
+    }
+    .selection{
+        border:2px solid#000;
+        font-size: larger;
+    }
+    
+</style>
+</head>
+
+<body>
+<div class="container-sm">
+    <label for="duration" style="color:#ffffff;font-size: x-large; font-family: Verdana, Geneva, Tahoma, sans-serif;">Enter Time:</label>
+    <input type="number" id="duration" min="1">
+    <select id="timeUnit" class="selection">
+        <option value="seconds">Seconds</option>
+        <option value="minutes">Minutes</option>
+        <option value="hours">Hours</option>
+        <option value="days">Days</option>
+    </select>
+    <button class="btn" id="startBtn" onclick="start()">Start</button>
+
+    <h2>TIME REMAINING!</h2>
+    <div class="timer">
+        <div class="sub_timer">
+            <p class="digit_name">Days</p>
+            <h1 id="day" class="digit">00</h1>
+        </div>
+        
+        
+        <div class="sub_timer">
+            <p class="digit_name">Hours</p>
+            <h1 id="hour" class="digit">00</h1>
+        </div>
+        
+        <div class="sub_timer">
+            <p class="digit_name">Minutes</p>
+            <h1 id="min" class="digit">00 </h1>
+        </div>
+        <div class="sub_timer">
+            <p class="digit_name">Seconds</p>
+            <h1 id="sec" class="digit">00 </h1>
+        </div>
+    </div>
+</div>
+<br>
+<br>
+<div class="button-cnt">
+    <button class="btn" id="stopBtn" onclick="stop()">Stop</button>
+    <button class="btn" id="resetBtn" onclick="reset()">Reset</button>
+</div>
+<script>
+var timerInterval;
+
+function start() {
+    var duration = parseInt(document.getElementById("duration").value);
+    var timeUnit = document.getElementById("timeUnit").value;
+    var targetMilliSec;
+
+    switch(timeUnit) {
+        case 'seconds':
+            targetMilliSec = new Date().getTime() + (duration * 1000);
+            break;
+        case 'minutes':
+            targetMilliSec = new Date().getTime() + (duration * 60 * 1000);
+            break;
+        case 'hours':
+            targetMilliSec = new Date().getTime() + (duration * 60 * 60 * 1000);
+            break;
+        case 'days':
+            targetMilliSec = new Date().getTime() + (duration * 24 * 60 * 60 * 1000);
+            break;
+        default:
+            targetMilliSec = new Date().getTime();
+    }
+
+    function timer() {
+        var nowMilliSec = new Date().getTime();
+        var remainingSec = Math.floor((targetMilliSec - nowMilliSec) / 1000);
+
+        if (remainingSec <= 0) {
+            document.querySelector("#day").innerHTML = "00";
+            document.querySelector("#hour").innerHTML = "00";
+            document.querySelector("#min").innerHTML = "00";
+            document.querySelector("#sec").innerHTML = "00";
+        
+            alert("Time's up!");
+            clearInterval(timerInterval);
+            return;
+        }
+
+        var days = Math.floor(remainingSec / (3600 * 24));
+        var hours = Math.floor((remainingSec % (3600 * 24)) / 3600);
+        var minutes = Math.floor((remainingSec % 3600) / 60);
+        var seconds = remainingSec % 60;
+
+        document.querySelector("#day").innerHTML = String(days).padStart(2, '0');
+        document.querySelector("#hour").innerHTML = String(hours).padStart(2, '0');
+        document.querySelector("#min").innerHTML = String(minutes).padStart(2, '0');
+        document.querySelector("#sec").innerHTML = String(seconds).padStart(2, '0');
+    }
+
+    // Call the timer function every second
+    timerInterval = setInterval(timer, 1000);
+}
+
+function stop() {
+    clearInterval(timerInterval);
+}
+
+function reset() {
+    clearInterval(timerInterval);
+    
+    document.getElementById("timeUnit").selectedIndex = 0;
+    document.querySelector("#day").innerHTML = "00";
+    document.querySelector("#hour").innerHTML = "00";
+    document.querySelector("#min").innerHTML = "00";
+    document.querySelector("#sec").innerHTML = "00";
+}
+</script>
+</body>
+</html>
