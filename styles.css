@@ -1,0 +1,64 @@
+body {
+    background-image: url('bg_image');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+}
+
+.container-sm {
+    text-align: center;
+    background-color: rgba(105, 101, 101, 0.8); /* Slightly transparent background */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 600px; /* Adjusted max-width for better appearance */
+}
+
+h1 {
+    font-size: 2.5em;
+    color: #ffffff;
+}
+
+label {
+    color: #fff9f9;
+    font-size: x-large;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+input[type="text"] {
+    width: calc(100% - 20px); /* Adjust for padding and border */
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #000000;
+    border-radius: 5px;
+}
+
+.btn {
+    border-radius: 5px;
+    padding: 10px 20px;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#message {
+    font-size: 24px; /* Adjust font size for readability */
+    color: #000000; /* Attractive color for the text */
+  
+    padding: 20px; /* Add padding for spacing */
+    border-radius: 10px; /* Rounded corners */
+  
+    margin-top: 20px; /* Space above the message */
+    text-align: center; /* Center align the text */
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; /* Consistent font */
+}
+
+
